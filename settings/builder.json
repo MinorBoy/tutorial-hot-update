@@ -1,28 +1,28 @@
 {
+  "appKey": "",
+  "appSecret": "",
   "excludeScenes": [],
-  "orientation": {
-    "landscapeLeft": true,
-    "landscapeRight": true,
-    "portrait": false,
-    "upsideDown": false
-  },
-  "packageName": "org.cocos2d.tutorialhotupdate",
-  "startScene": "8a546935-70d4-42d2-a051-8d0e76f28008",
-  "title": "tutorialhotupdate",
-  "webOrientation": "auto",
+  "includeAnySDK": false,
+  "includeSDKBox": false,
   "includeSdk": [
     "anysdk"
   ],
-  "includeAnySDK": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": false,
+  "md5Cache": false,
+  "mergeStartScene": false,
   "oauthLoginServer": "",
-  "appKey": "",
-  "appSecret": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": true,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.tutorialhotupdate",
   "privateKey": "",
   "renderMode": "0",
-  "inlineSpriteFrames": true,
-  "mergeStartScene": false,
-  "includeSDKBox": false,
-  "inlineSpriteFrames_native": true,
-  "optimizeHotUpdate": false,
-  "md5Cache": false
+  "startScene": "8a546935-70d4-42d2-a051-8d0e76f28008",
+  "title": "tutorialhotupdate",
+  "webOrientation": "auto"
 }
