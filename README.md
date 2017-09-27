@@ -50,3 +50,8 @@ http://localhost:8000/
 * `\build\jsb-default\src\jsb_anysdk_constants.js`
 * `\build\jsb-default\src\jsb_anysdk.js`
 * `\build\jsb-default\src\jsb_polyfill.js`
+
+
+#### TODO 
+
+[如何在 Android 平台上使用 JavaScript 直接调用 Java 方法](http://www.cocos.com/docs/creator/advanced-topics/java-reflection.html)
