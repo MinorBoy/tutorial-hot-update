@@ -423,47 +423,57 @@ cc.Class({
         var needRestart = false;
         var failed = false;
         switch (event.getEventCode())
-        {
+        {   
             case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
+                //热更失败：缺少本地manifest文件
                 this.panel.info.string = 'No local manifest file found, hot update skipped.';
                 failed = true;
                 break;
             case jsb.EventAssetsManager.UPDATE_PROGRESSION:
-                this.panel.byteProgress.progress = event.getPercent();
-                this.panel.fileProgress.progress = event.getPercentByFile();
+                // 热更进度
+                this.panel.byteProgress.progress = event.getPercent();  //字节级进度（百分比）
+                this.panel.fileProgress.progress = event.getPercentByFile();    //文件级进度（百分比）
 
+                // 已接收到的文件数 / 总文件数
                 this.panel.fileLabel.string = event.getDownloadedFiles() + ' / ' + event.getTotalFiles();
+                // 已接收到的字节数 / 总字节数
                 this.panel.byteLabel.string = event.getDownloadedBytes() + ' / ' + event.getTotalBytes();
 
                 var msg = event.getMessage();
                 if (msg) {
                     this.panel.info.string = 'Updated file: ' + msg;
-                    // cc.log(event.getPercent()/100 + '% : ' + msg);
                 }
                 break;
             case jsb.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST:
+                // manifest文件下载失败
             case jsb.EventAssetsManager.ERROR_PARSE_MANIFEST:
+                // manifest文件解析失败
                 this.panel.info.string = 'Fail to download manifest file, hot update skipped.';
                 failed = true;
                 break;
             case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
+                // 已是最新版本
                 this.panel.info.string = 'Already up to date with the latest remote version.';
                 failed = true;
                 break;
             case jsb.EventAssetsManager.UPDATE_FINISHED:
+                // 热更成功，设置重启标记
                 this.panel.info.string = 'Update finished. ' + event.getMessage();
                 needRestart = true;
                 break;
             case jsb.EventAssetsManager.UPDATE_FAILED:
+                // 热更失败
                 this.panel.info.string = 'Update failed. ' + event.getMessage();
                 this.panel.retryBtn.active = true;
                 this._updating = false;
                 this._canRetry = true;
                 break;
             case jsb.EventAssetsManager.ERROR_UPDATING:
+                // 下载失败
                 this.panel.info.string = 'Asset update error: ' + event.getAssetId() + ', ' + event.getMessage();
                 break;
             case jsb.EventAssetsManager.ERROR_DECOMPRESS:
+                // 解压失败
                 this.panel.info.string = event.getMessage();
                 break;
             default:
@@ -495,6 +505,7 @@ cc.Class({
         }
     },
 
+    // 自定义manifest文件
     loadCustomManifest: function () {
         if (this._am.getState() === jsb.AssetsManager.State.UNINITED) {
             var manifest = new jsb.Manifest(customManifestStr, this._storagePath);
@@ -503,6 +514,7 @@ cc.Class({
         }
     },
     
+    // 失败重试
     retry: function () {
         if (!this._updating && this._canRetry) {
             this.panel.retryBtn.active = false;
@@ -513,6 +525,7 @@ cc.Class({
         }
     },
     
+    // 检测更新
     checkUpdate: function () {
         if (this._updating) {
             this.panel.info.string = 'Checking or updating ...';
@@ -532,6 +545,7 @@ cc.Class({
         this._updating = true;
     },
 
+    // 热更新
     hotUpdate: function () {
         if (this._am && !this._updating) {
             this._updateListener = new jsb.EventListenerAssetsManager(this._am, this.updateCb.bind(this));
@@ -548,6 +562,7 @@ cc.Class({
         }
     },
     
+    // 显示更新UI
     show: function () {
         if (this.updateUI.active === false) {
             this.updateUI.active = true;
@@ -592,12 +607,15 @@ cc.Class({
         // Init with empty manifest url for testing custom manifest
         this._am = new jsb.AssetsManager('', this._storagePath, versionCompareHandle);
         if (!cc.sys.ENABLE_GC_FOR_NATIVE_OBJECTS) {
+            // 由于下载过程是异步的，你需要增加manager的索引数以保证它不会被Cocos2d-x的内存管理释放掉
             this._am.retain();
         }
 
-        var panel = this.panel;
+        
+        // 下载后文件校验
         // Setup the verification callback, but we don't have md5 check function yet, so only print some message
         // Return true if the verification passed, otherwise return false
+        var panel = this.panel;
         this._am.setVerifyCallback(function (path, asset) {
             // When asset is compressed, we don't need to check its md5, because zip file have been deleted.
             var compressed = asset.compressed;
@@ -622,6 +640,7 @@ cc.Class({
         if (cc.sys.os === cc.sys.OS_ANDROID) {
             // Some Android device may slow down the download process when concurrent tasks is too much.
             // The value may not be accurate, please do more test and find what's most suitable for your game.
+            // 控制下载并发数量
             this._am.setMaxConcurrentTask(2);
             this.panel.info.string = "Max concurrent tasks count have been limited to 2";
         }

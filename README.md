@@ -45,3 +45,8 @@ http://localhost:8000/
 * **解决**：`cmd`关闭server服务，`cd ../tutorial-hot-update`，启动server服务，确保链接地址和manifest文件里面的URL相匹配。
 
 
+### 来自JS引擎编译生成的文件
+
+* `\build\jsb-default\src\jsb_anysdk_constants.js`
+* `\build\jsb-default\src\jsb_anysdk.js`
+* `\build\jsb-default\src\jsb_polyfill.js`
