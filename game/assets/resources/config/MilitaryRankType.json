@@ -1,0 +1,19 @@
+{
+ "1" : {"ID" : 1 ,"name" : "草民" ,"captainLv" : 5 ,"crysneed" : 2000 ,"prestige" : 50 ,"activeadd" : [[94,6]]  },
+ "2" : {"ID" : 2 ,"name" : "孝廉" ,"captainLv" : 10 ,"crysneed" : 12000 ,"prestige" : 100 ,"activeadd" : [[94,12]]  },
+ "3" : {"ID" : 3 ,"name" : "里长" ,"captainLv" : 15 ,"crysneed" : 60000 ,"prestige" : 150 ,"activeadd" : [[94,18]]  },
+ "4" : {"ID" : 4 ,"name" : "亭长" ,"captainLv" : 20 ,"crysneed" : 240000 ,"prestige" : 200 ,"activeadd" : [[94,24]]  },
+ "5" : {"ID" : 5 ,"name" : "蔷夫" ,"captainLv" : 25 ,"crysneed" : 720000 ,"prestige" : 250 ,"activeadd" : [[94,30]]  },
+ "6" : {"ID" : 6 ,"name" : "县尉" ,"captainLv" : 30 ,"crysneed" : 1800000 ,"prestige" : 300 ,"activeadd" : [[94,36]]  },
+ "7" : {"ID" : 7 ,"name" : "郎中" ,"captainLv" : 35 ,"crysneed" : 3600000 ,"prestige" : 350 ,"activeadd" : [[94,42]]  },
+ "8" : {"ID" : 8 ,"name" : "侍郎" ,"captainLv" : 40 ,"crysneed" : 5400000 ,"prestige" : 400 ,"activeadd" : [[94,48]]  },
+ "9" : {"ID" : 9 ,"name" : "县丞" ,"captainLv" : 45 ,"crysneed" : 8100000 ,"prestige" : 450 ,"activeadd" : [[94,54]]  },
+ "10" : {"ID" : 10 ,"name" : "县长" ,"captainLv" : 50 ,"crysneed" : 12150000 ,"prestige" : 500 ,"activeadd" : [[94,60]]  },
+ "11" : {"ID" : 11 ,"name" : "博士" ,"captainLv" : 55 ,"crysneed" : 18000000 ,"prestige" : 550 ,"activeadd" : [[94,66]]  },
+ "12" : {"ID" : 12 ,"name" : "议郎" ,"captainLv" : 60 ,"crysneed" : 24000000 ,"prestige" : 600 ,"activeadd" : [[94,72]]  },
+ "13" : {"ID" : 13 ,"name" : "中郎" ,"captainLv" : 65 ,"crysneed" : 30000000 ,"prestige" : 650 ,"activeadd" : [[94,78]]  },
+ "14" : {"ID" : 14 ,"name" : "谒者" ,"captainLv" : 70 ,"crysneed" : 40000000 ,"prestige" : 700 ,"activeadd" : [[94,84]]  },
+ "15" : {"ID" : 15 ,"name" : "刺史" ,"captainLv" : 75 ,"crysneed" : 100000000 ,"prestige" : 750 ,"activeadd" : [[94,90]]  },
+ "16" : {"ID" : 16 ,"name" : "大夫" ,"captainLv" : 80 ,"crysneed" : 400000000 ,"prestige" : 800 ,"activeadd" : [[94,96]]  },
+ "17" : {"ID" : 17 ,"name" : "太守" ,"captainLv" : 0 ,"crysneed" : 800000000 ,"prestige" : 850 ,"activeadd" : [[94,102]]  }
+}
