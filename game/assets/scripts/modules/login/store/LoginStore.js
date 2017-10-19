@@ -10,6 +10,7 @@ export default class LoginStore extends FluxReduceStore {
     getInitialState() {
         return Immutable.fromJS({
             selectServer: null,
+            playerAccount: null,
             serverList: []
         });
     }
@@ -31,18 +32,36 @@ export default class LoginStore extends FluxReduceStore {
         }
     }
 
-    changeToServerMap(state, info){
+    changeToServerMap(state, data){
+        let info = data.info;
+        let selectServerId = data.selectServerId;
+        let playerAccount = data.playerAccount;
         let serverList = [];
         let serverInfoList = info.split(";");
         let selectServer = null;
+        let defaultSelectServer = null;
         serverInfoList.forEach( (infoStr) => {
             let server = Server.valueOf(infoStr);
-            serverList.push(server);
-            selectServer = server;
+            if(server.serverId >= 9000){
+                serverList.push(server);
+                defaultSelectServer = server;
+                if(selectServerId == server.serverId){
+                    selectServer = server;
+                }
+            }
         });
+        if(selectServer == null){
+            selectServer = defaultSelectServer;
+        }
 
-        let s1 = state.set("serverList", serverList);
-        return s1.set("selectServer", selectServer);
+        let resultState = state;
+        if(playerAccount != null){
+            resultState = resultState.set("playerAccount", playerAccount);
+        }
+
+        resultState = resultState.set("serverList", serverList);
+        resultState = resultState.set("selectServer", selectServer);
+        return resultState;
     }
 
 

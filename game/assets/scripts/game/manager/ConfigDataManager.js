@@ -76,6 +76,35 @@ class ConfigDataManager{
         return result;
     }
 
+    /**
+     * 方法说明 获取配置表长度
+     * @public true
+     * @method getConfigLength
+     * @param name 配置表名字from ConfigName获取
+     * @return 配置表长度
+     */
+    getConfigLength(name){
+        let configData = this._getConfigData(name);
+        return this._getObjectSize(configData)
+    }
+
+
+    /**
+     * 方法说明 获取配置表长度
+     * @public false
+     * @method _getObjectSize
+     * @param the_object 对象
+     * @return 对象长度
+     */
+    _getObjectSize(the_object) {
+        let object_size = 0;
+        for (let key in the_object){
+            if (the_object.hasOwnProperty(key)) {
+                object_size++;
+            }
+        }
+        return object_size;
+    }
 
     //通过多个key-value 找出对应的配置数据
     _getInfoFindByField(name, fieldMap){
@@ -115,11 +144,19 @@ class ConfigDataManager{
             this._loadConfig(name, (obj) => {
                 this._addConfigData(name, obj);
                 completeCount++;
-                if(loadCount == completeCount){
+                // if(loadCount == completeCount){
                     complete.call(this);
-                }
+                // }
             })
         }
+    }
+
+    getTotalCount(){
+        let i = 0;
+        for (let k in ConfigName) {
+            i++;
+        }
+        return i;
     }
 
     _loadConfig(name, callback){
@@ -135,6 +172,8 @@ class ConfigDataManager{
         })
 
     }
+
+    
 }
 
 let manager = new ConfigDataManager();

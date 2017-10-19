@@ -24,6 +24,6 @@ class AllComponent{
     }
 }
 
-AllComponent.uiSecLvPanel = "uiSecLvPanel";
+AllComponent.uiSecLvPanel = "UISecLvPanel";
 
 export default new AllComponent();

@@ -10,6 +10,9 @@ import ChatStore from "ChatStore";
 import ChatAction from "ChatAction";
 import ChatActionTypes from "ChatActionTypes";
 
+import GameProxy from "GameProxy";
+import AppEvent from "AppEvent";
+
 class ChatModule extends BasicModule{
     constructor(dispatcher){
         super(dispatcher);
@@ -22,6 +25,7 @@ class ChatModule extends BasicModule{
 
     initModule(){
         super.initModule();
+        logger.info("为什么这个模块会预先被加载")
         //设置分发监听绑定
         let dispatch = this.getDispatcher();
         let store = new ChatStore(dispatch);
@@ -36,11 +40,37 @@ class ChatModule extends BasicModule{
     }
 
     panelActionHandler(type, data) {
+        switch(type)
+        {   
+            case ChatActionTypes.SEND_CHATINFO:
+            this.sendChatInfo(data)
+            break;
+            default:
+            break;
 
+        }
     }
 
     gameActionHandler(event, data){
+        switch(event)
+        {
+            case AppEvent.GET_CHATINFO:
+            this.receveChatInfo(data);
+            break;
+        }
+    }
 
+    //发送聊天数据
+    sendChatInfo(data)
+    {   
+        logger.info(data)
+        let chatProxy = this.getProxy(GameProxy.Chat)
+        chatProxy.onTriggerNet140000Req(data)
+    }
+
+    receveChatInfo(data)
+    {
+        this.getAction().getChatInfo(data);
     }
 
 }

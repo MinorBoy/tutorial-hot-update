@@ -39,6 +39,7 @@ class BasicComponent extends cc.Component{
         }
         this._init = true;
         this.initComponent();
+        this.registerEvents();
 
         this.state = this.getInitialState();
         this.setState(this.state);

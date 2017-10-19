@@ -13,6 +13,7 @@ import LoginActionTypes from "LoginActionTypes";
 import AppEvent from "AppEvent";
 import GameProxy from "GameProxy";
 import GameState from "GameState";
+import GameModule from "GameModule";
 
 class LoginModule extends BasicModule {
     constructor(dispatcher) {
@@ -62,12 +63,12 @@ class LoginModule extends BasicModule {
                 logger.info("!!!!!!panelActionHandler!!!!!CONNECT_SERVER!!!", data);
                 this.connectServer(data.server, data.accountName);
                 break;
-            case LoginActionTypes.RESP_LOGIN_GATE:
-
-                break;
             case LoginActionTypes.SHOW_OTHER_EVENT:
                 logger.info("LoginActionTypes.SHOW_OTHER_EVENT, 执行切换", data);
                 this.onShowOtherHandler(data);
+                break;
+            case LoginActionTypes.CLOSE_LOADER_MODULE:
+                this.sendNotification(AppEvent.MODULE_CLOSE_EVENT, { moduleName: GameModule.LoaderModule });
                 break;
 
         }
@@ -86,6 +87,10 @@ class LoginModule extends BasicModule {
         GameConfig.accountName = accountName;
         GameConfig.serverName = server.name;
         GameConfig.serverId = server.serverId;
+
+        //存帐服数据
+        this.setLocalStorageByKey("accountName", accountName);
+        this.setLocalStorageByKey("serverId", server.serverId);
 
         this.sendNotification(AppEvent.NET_START_CONNECT, server);
         

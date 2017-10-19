@@ -299,6 +299,9 @@ ConfigName.CornucopiaRewardConfig = "CornucopiaRewardType"
 
 ConfigName.CityRewardConfig ="CityRewardType"
 
+//姓名
+ConfigName.FamilyNameConfig = "FamilyNameType"
+ConfigName.GivenNameConfig = "GivenNameType"
 
 
 

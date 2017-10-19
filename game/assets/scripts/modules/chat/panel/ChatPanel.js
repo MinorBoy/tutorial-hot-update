@@ -3,10 +3,26 @@
  */
 import BasicPanel from "BasicPanel";
 import logger from "Logger";
+import AllComponent from "AllComponent"
+import worldChatPanel from "worldChatPanel"
+import legionChatPanel from "legionChatPanel"
 
 class ChatPanel extends BasicPanel{
 
     initPanel(){
+
+    }
+
+    afterinitPanel()
+    {
+        this.create1LvBg("聊天", null)
+
+        this._tabControl = AllComponent.getInstantiate("UITabControl")
+        this.node.addChild(this._tabControl)
+        this._tabControl.getComponent("UITabControl").setParent(this)
+        this._tabControl.getComponent("UITabControl").addTabPanel(worldChatPanel.NAME, "世界")
+        this._tabControl.getComponent("UITabControl").addTabPanel(legionChatPanel.NAME, "同盟")
+        this._tabControl.getComponent("UITabControl").setItemCount(1, 10, true)
     }
 
     registerEvents(){

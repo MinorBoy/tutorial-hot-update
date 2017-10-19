@@ -60,10 +60,10 @@ class GameSocket {
     }
 
     //接受到网络数据
-    onMessage(evt) {
-        logger.info("~~~~~onMessage~~~~ evt.data :" , evt.data);
-        var binary = new Uint16Array(evt.data);
-        logger.info("~~~~~onMessage~~~~:" , binary.buffer);
+    onMessage(evt) {      
+        //logger.info("~~~~~onMessage~~~~ evt.data :" , evt.data);
+        var binary = new Uint8Array(evt.data);
+        //logger.info("~~~~~onMessage~~~~:" , binary.buffer);
         var byteArray = dcodeIO.ByteBuffer.concat([binary.buffer]);
         byteArray.flip();
         this._channel.recvNet(byteArray);
@@ -83,7 +83,6 @@ class GameSocket {
 
     send(buffer) {
         if (this._socket.readyState == WebSocket.OPEN){
-            logger.info("~~~~~~~~send~~~~net~~~data~");
             this._socket.send(buffer);
         }else {
             logger.warn("!!!!网络关闭中，无法发送数据!!!!!")

@@ -10,6 +10,11 @@ import #moduleName#Store from "#moduleName#Store";
 import #moduleName#Action from "#moduleName#Action";
 import #moduleName#ActionTypes from "#moduleName#ActionTypes";
 
+import AppEvent from "AppEvent";
+import GameProxy from "GameProxy";
+import GameModule from "GameModule"; 
+import GameConfig from "GameConfig";
+
 class #moduleName#Module extends BasicModule{
     constructor(dispatcher){
         super(dispatcher);

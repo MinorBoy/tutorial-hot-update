@@ -7,5 +7,5 @@
 import FluxReduceStore from "FluxReduceStore";
 
 export default class BasicStore extends FluxReduceStore{
-
+    
 }

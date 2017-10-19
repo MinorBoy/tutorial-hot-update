@@ -11,6 +11,11 @@ import ToolbarModule from "ToolbarModule";
 import RoleInfoModule from "RoleInfoModule";
 import ChatModule from "ChatModule";
 import ActivityModule from "ActivityModule";
+import CreateRoleModule from "CreateRoleModule";
+import MapModule from "MapModule";
+import BattleModule from "BattleModule";
+//Import:Creator自动注册标记
+//上面这句必须存在，用Creator创建模块时自动添加代码的标记
 
 let GameModuleMap = {};
 GameModuleMap[GameModule.LoginModule] = LoginModule;
@@ -21,6 +26,11 @@ GameModuleMap[GameModule.ToolbarModule] = ToolbarModule;
 GameModuleMap[GameModule.RoleInfoModule] = RoleInfoModule;
 GameModuleMap[GameModule.ChatModule] = ChatModule;
 GameModuleMap[GameModule.ActivityModule] = ActivityModule;
+GameModuleMap[GameModule.CreateRoleModule] = CreateRoleModule;
+GameModuleMap[GameModule.MapModule] = MapModule;
+GameModuleMap[GameModule.BattleModule] = BattleModule;
+//Name:Creator自动注册标记
+//上面这句必须存在，用Creator创建模块时自动添加代码的标记
 
 /**
  * 场景模块的，在这里加入
@@ -33,6 +43,12 @@ let SceneModuleNameList = [
     GameModule.RoleInfoModule,
     GameModule.ChatModule,
     GameModule.ActivityModule,
+    GameModule.CreateRoleModule,
+    GameModule.MapModule,
+    GameModule.BattleModule,
+    //Class:Creator自动注册标记
+    //上面这句必须存在，用Creator创建模块时自动添加代码的标记
+    //!!!!!!!!!!!!!!注意，如果创建的模块不属于SceneModule则需要手动删除!!!!!!!!!!!!!!!!!!!
 ];
 
 ////////////////////////////////////////////////////////////

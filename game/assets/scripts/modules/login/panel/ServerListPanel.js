@@ -8,9 +8,11 @@ import logger from "Logger";
 class ServerListPanel extends BasicPanel{
 
     initPanel(){
-        // let node = AllComponent.getInstantiate(AllComponent.uiSecLvPanel);
-        // this.node.addChild(node);
-        this.initUI("服务器信息",2,550,700,null,()=>this.onCloseBtn());
+        // logger.info(AllComponent.uiSecLvPanel)
+        //let node = AllComponent.getInstantiate("UITab");
+        //this.node.addChild(node);
+        //this.initUIFirst("服务器信息",null)
+        this.createLv2Bg("服务器信息",550,700,()=>this.onCloseBtn(),null);
         this._scrollView = this.getChildByName("scrollView");
         this._serverPanel = this.getChildByName("scrollView/view/serverPanel"); //this._scrollView.content; //this.getChildByName("serverPanel");
         this._infoPanel = this.getChildByName("infoPanel");// this.getChildByName("serverPanel/infoPanel");
@@ -46,7 +48,7 @@ class ServerListPanel extends BasicPanel{
     render(){
         let serverList = this.state.get("serverList");
         let selectServer = this.state.get("selectServer");
-        logger.info(serverList);
+        logger.info("所有的服"+serverList);
         serverList.forEach(server => {
             let serverId = server.serverId;
             let infoPanel = this._infoPanelMap[serverId]; //this._infoPanelList.pop();

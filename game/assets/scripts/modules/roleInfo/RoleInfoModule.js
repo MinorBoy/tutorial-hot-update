@@ -9,6 +9,9 @@ import RoleInfoView from "RoleInfoView";
 import RoleInfoStore from "RoleInfoStore";
 import RoleInfoAction from "RoleInfoAction";
 import RoleInfoActionTypes from "RoleInfoActionTypes";
+import AppEvent from "AppEvent";
+import GameProxy from "GameProxy";
+
 
 class RoleInfoModule extends BasicModule{
     constructor(dispatcher){
@@ -33,15 +36,28 @@ class RoleInfoModule extends BasicModule{
         this._view.setModuleName(RoleInfoModule.NAME);
         this._view.showDefaultPanel();
 
+        this.initRoleData()
     }
 
     panelActionHandler(type, data) {
-
+        switch (type) {
+        }
     }
 
     gameActionHandler(event, data){
-
+        switch(event){
+            case AppEvent.PROXY_GET_ROLE_INFO:
+                this.getAction().initRoleData(data)
+                break;
+        }
     }
+
+
+    initRoleData(){
+        // this._roleProxy = this.getProxy(GameProxy.Role)
+        // this.getAction().initRoleData(this._roleProxy.getActorInfo())
+        this.getAction().initRoleData()
+    };
 
 }
 RoleInfoModule.NAME = "RoleInfoModule";

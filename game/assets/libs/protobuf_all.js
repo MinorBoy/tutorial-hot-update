@@ -8959,7 +8959,9 @@ Root.prototype.load = function load(filename, options, callback) {
             process(filename, source);
         } else {
             ++queued;
-            util.fetch(filename, function(err, source) {
+            //修改成util.fetch --> cc.loader.loadRes
+            var resourceName = filename.replace(".proto", "");
+            cc.loader.loadRes(resourceName, function(err, source) {
                 --queued;
                 /* istanbul ignore if */
                 if (!callback)

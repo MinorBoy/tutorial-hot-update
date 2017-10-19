@@ -17,11 +17,15 @@ class BasicProxy {
     }
 
     setProxyName(name) {
-        this._game = name;
+        this._name = name;
     }
 
     setGame(game) {
         this._game = game;
+    }
+
+    getProxy(proxyName){
+        return this._game.getProxy(proxyName);
     }
 
     //重置数据，在切换账号的时候重置调用
@@ -75,7 +79,8 @@ class BasicProxy {
 
     ///请求协议
     syncNetReq(mId, cmd, obj) {
-        var data = {};
+        console.assert(mId && cmd, "忘记在AppEvent注册协议号了");
+        let data = {};
         data.mId = mId;
         data.cmdId = cmd;
         data.obj = obj;
@@ -96,13 +101,13 @@ class BasicProxy {
     //--通过cmd来区分倒计时触发逻辑，一个cmd只能对应一个completeCallback
     //--每一个操作只会对应一个定时器逻辑
     //--当remainTime设置为0时，则将对应的定时器删除掉，只有同步到服务端发送过来的数据才会设置为0
-    pushRemainTime(key, remainTime, cmd, data, completeCallback) {
+    pushRemainTime(key, remainTime/*秒*/, cmd, data, completeCallback) {
         if (this._remainTimeMap[key] == null) {
             this._remainTimeMap[key] = {};
         }
 
         if (remainTime == 0) {
-            this._remainTimeMap[key] = null;
+            delete this._remainTimeMap[key];
         } else {
             this._remainTimeMap[key] = {
                 remainTime: remainTime,
@@ -122,7 +127,7 @@ class BasicProxy {
             return 0;
         }
 
-        var obj = this._remainTimeMap[key];
+        let obj = this._remainTimeMap[key];
         return this._getCurRemainTimeByObj(obj);
     }
 
@@ -143,12 +148,12 @@ class BasicProxy {
     //同时标志改cmd状态为请求状态中，如果请求状态超过3秒，则重新请求操作
     //设定一个最大尝试请求次数，如果超过则直接断线
     update(dt) {
-        var needSyncList = {};
-        var curTime = TimeUtils.getStampTime();
-        var removeKey = [];
-        for (var key in this._remainTimeMap) {
-            var obj = this._remainTimeMap[key];
-            var curRemainTime = this._getCurRemainTimeByObj(obj);
+        let needSyncList = {};
+        let curTime = TimeUtils.getStampTime();
+        let removeKey = [];
+        for (let key in this._remainTimeMap) {
+            let obj = this._remainTimeMap[key];
+            let curRemainTime = this._getCurRemainTimeByObj(obj);
             if (curRemainTime <= 0 && obj.syncTime == null) {
                 obj.syncCount = 1;
                 if (obj.cmd != null) { //--一些操作不需要回调同步，客户端直接删除对应的定时器
@@ -176,17 +181,21 @@ class BasicProxy {
             }
         }
 
-        for (var i in removeKey) {
-            this._remainTimeMap[removeKey[i]] = null;
+        for (let i in removeKey) {
+            let obj = this._remainTimeMap[removeKey[i]];
+            if(obj.callback){
+                obj.callback.call(this, obj.data)
+            }
+            delete this._remainTimeMap[removeKey[i]];
         }
 
         if (this._game.isGameNetConnected()) {
-            for (var cmd in needSyncList) {
-                var list = needSyncList[cmd];
-                var sendDataList = {};
-                var callback = null;
-                for (var i in list) {
-                    var obj = list[i];
+            for (let cmd in needSyncList) {
+                let list = needSyncList[cmd];
+                let sendDataList = [];
+                let callback = null;
+                for (let i in list) {
+                    let obj = list[i];
                     obj.syncTime = TimeUtils.getStampTime();
                     callback = obj.callback;
                     sendDataList.push(obj.data);

@@ -13,11 +13,14 @@ import LoaderActionTypes from "LoaderActionTypes";
 import GameConfig from "GameConfig";
 import logger from "Logger";
 import AppEvent from "AppEvent";
+import GameLayerName from "GameLayerName";
 
 class LoaderModule extends BasicModule {
     constructor(dispatcher) {
         super(dispatcher);
         this._view = null;
+
+        this.__uiLayerName = GameLayerName.uiTopLayer;
     }
 
     finalize() {

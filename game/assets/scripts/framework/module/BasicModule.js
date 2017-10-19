@@ -30,6 +30,7 @@ class BasicModule {
 
     setAction(action){
         this._action = action;
+        this._action.setModule(this);
     }
 
     getAction(){
@@ -68,6 +69,10 @@ class BasicModule {
         this._gameState.addToLayer(this.__uiLayerName, this._rootNode);
     }
 
+    getLayer(layerName){
+        return this._gameState.getLayer(layerName);
+    }
+
     hideModule() {
         if(this._rootNode == null){
             return;
@@ -82,7 +87,6 @@ class BasicModule {
     }
 
     onHideModule() {
-
     }
 
     initModule() {
@@ -104,7 +108,7 @@ class BasicModule {
 
     //消息
     showMessage(content){
-        self._gameState.showMessage(content)
+        this._gameState.showMessage(content)
     }
 
     /**
@@ -123,6 +127,14 @@ class BasicModule {
      */
     gameActionHandler(event, data){
 
+    }
+
+    setLocalStorageByKey(key, info){
+        cc.sys.localStorage.setItem(key, JSON.stringify(info));
+    }
+
+    getLocalStorageByKey(key){
+        return JSON.parse(cc.sys.localStorage.getItem(key));
     }
 
     __invokeOnDispatch(payload){

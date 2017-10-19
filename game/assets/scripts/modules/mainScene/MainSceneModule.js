@@ -9,6 +9,9 @@ import MainSceneView from "MainSceneView";
 import MainSceneStore from "MainSceneStore";
 import MainSceneAction from "MainSceneAction";
 import MainSceneActionTypes from "MainSceneActionTypes";
+import GameProxy from "GameProxy";
+import AppEvent from "AppEvent";
+
 
 class MainSceneModule extends BasicModule{
     constructor(dispatcher){
@@ -36,13 +39,29 @@ class MainSceneModule extends BasicModule{
     }
 
     panelActionHandler(type, data) {
+        logger.info("*****执行 panelActionHandler*****");
         switch(type){
             case MainSceneActionTypes.LOAD_COMPLETE:
+            case MainSceneActionTypes.BUILDING_UPGRATE_REQ:
+                this.getProxy(GameProxy.Building).onTriggerNet280001Req(data);
+            case MainSceneActionTypes.BUILDING_UPGRATE_REV:
+                this.getProxy(GameProxy.Building).onTriggerNet280003Req(data);
+            case MainSceneActionTypes.BUILDING_UPGRATE_QUICK:
+                this.getProxy(GameProxy.Building).onTriggerNet280004Req(data);
+            case MainSceneActionTypes.BUILDING_REMOVE_FIELD:
+                this.getProxy(GameProxy.Building).onTriggerNet280005Req(data);
+            case MainSceneActionTypes.BUILDING_PRODUCT_REQ:
+                this.getProxy(GameProxy.Building).onTriggerNet280006Req(data);
+            case MainSceneActionTypes.BUILDING_PRODUCT_REV:
+                this.getProxy(GameProxy.Building).onTriggerNet280008Req(data);
+            case MainSceneActionTypes.BUILDING_PRODUCT_QUICK:
+                this.getProxy(GameProxy.Building).onTriggerNet280009Req(data);
             break;
         }
     }
-
+    
     gameActionHandler(event, data){
+        logger.info("*****执行 gameActionHandler*****");
 
     }
 

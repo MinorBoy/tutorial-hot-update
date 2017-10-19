@@ -4,7 +4,9 @@ import GameStateMap from "GameStateMap";
 import NetChannel from "NetChannel";
 import GameProxyMap from "GameProxyMap";
 import PhoneInfo from "PhoneInfo"
-import logger from "Logger"
+import logger from "Logger";
+import GameTest from "GameTest";
+import Debug from "Debug";
 
 class Game {
 
@@ -15,9 +17,21 @@ class Game {
         this._netChannelMap = {};
         this._proxyMap = {};
 
-        this.initPhoneInfo()
+        this.initConfig();
+        this.initPhoneInfo();
         this.addStateMachine();
         this.registerProxys();
+
+        Debug.create(this);
+    }
+
+    initConfig(){
+        if (cc.sys.os != cc.sys.OS_WINDOWS) {
+            logger.setLevel(1);
+            cc.director.setDisplayStats(false);
+        }
+
+        GameTest.debug();
     }
 
     startGame() {
@@ -108,13 +122,14 @@ class Game {
      * @return 
      */
     dispatchRecvData(recvData) {
+        let mId = recvData.mId
+        let cmdId = recvData.cmdId
+        let data = recvData.data
+        let funName = "onTriggerNet" + cmdId + "Resp"
 
-        for (name in this._proxyMap) {
-            let mId = recvData.mId
-            let cmdId = recvData.cmdId
-            let data = recvData.data
+        for (name in this._proxyMap) {            
             let proxy = this._proxyMap[name]
-            let func = proxy["onTriggerNet" + cmdId + "Resp"]
+            let func = proxy[funName]
             if (func) {
                 func.call(proxy, data)
             }

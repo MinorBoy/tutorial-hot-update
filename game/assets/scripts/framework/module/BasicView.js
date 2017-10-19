@@ -5,6 +5,7 @@
 import FluxContainer from "FluxContainer";
 import StringUtils from "StringUtils";
 import logger from "Logger";
+import AppEvent from "AppEvent"
 
 class BasicView {
     constructor(module, store, action) {
@@ -16,6 +17,7 @@ class BasicView {
 
         this._moduleName = "";
 
+        this._panelLayerMap = {};  //自定义panel层级
         this._panelMap = {};
         this._panelClassMap = {};
         this.registerPanels();
@@ -43,6 +45,12 @@ class BasicView {
 
     getAction(){
         return this._action;
+    }
+
+    getLayer(layerName){
+        let gameState = this._module.getGameState();
+        let layer = gameState.getLayer(layerName);
+        return layer;
     }
 
     setModuleName(name) {
@@ -85,9 +93,15 @@ class BasicView {
     }
 
     hidePanel(name) {
+        logger.info("关闭了 panel",name)
         let component = this._panelMap[name];
+        if(component == null )
+        {
+            return;
+        }
         let panelNode = component.node;
         panelNode.active = false;
+        component.onHide();
     }
 
     createPanel(name) {
@@ -100,23 +114,30 @@ class BasicView {
             if (newNode === null) {
                 logger.error(err);
                 return;
-            }
+            }            
             newNode.x = 0;
             newNode.y = 0;
+
+            // 判断是否有自定义panel层级
+            if (this._panelLayerMap[name] != null) {
+                this._parent = this.getLayer(this._panelLayerMap[name]);
+            }
+
             this._parent.addChild(newNode);
 
-            let panelClass = this._panelClassMap[name];
-            
 
-            // let storeModuleName = name.replace("Panel", "Store");
-            // let storeClass = require(storeModuleName);
+            //UI适配，让panel根节点和屏幕一样比例
+            let uiAdapter = newNode.addComponent("UIAdapter");
+
+            //
+            let panelClass = this._panelClassMap[name];
             let component = newNode.addComponent(panelClass);
             component.setView(this);
-            component.initPanel();
-            component.registerEvents();
             component.onShow();
             this._panelMap[name] = component;
             FluxContainer.createFunctional(component, this._store);
+
+            
         });
     }
 
@@ -132,6 +153,13 @@ class BasicView {
     //消息
     showMessage(content){
         self._module.showMessage(content)
+    }
+
+
+    hideModule()
+    {
+        this._module.hideModule()
+        this._module.sendNotification(AppEvent.MODULE_CLOSE_EVENT, {moduleName: this._moduleName});
     }
 }
 

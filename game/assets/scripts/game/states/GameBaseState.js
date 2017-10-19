@@ -74,6 +74,11 @@ class GameBaseState extends BaseState{
         let layer = this._gameLayer.getLayer(layerName);
         layer.addChild(node);
     }
+    
+    getLayer(layerName){
+        let layer = this._gameLayer.getLayer(layerName);
+        return layer;
+    }
 
     //////////////事件相关////////////////////////
 
@@ -143,6 +148,7 @@ class GameBaseState extends BaseState{
 
     showModule(data){
         let moduleName = data["moduleName"];
+        let loadCallback = data["callback"];
         let module = this.getModule(moduleName);
         if(module == null){
             let moduleClass = this.getModuleClass(moduleName);
@@ -167,6 +173,9 @@ class GameBaseState extends BaseState{
         this._showModuleMap[moduleName] = module;
         module.showModule();
 
+        if(loadCallback != null){
+            loadCallback.call(this);
+        }
     }
 
     closeModule(data){
@@ -179,7 +188,7 @@ class GameBaseState extends BaseState{
         }
 
         this._showModuleMap[moduleName] = null;
-        //delete this._showModuleMap[moduleName];
+        delete this._showModuleMap[moduleName];
 
         module.hideModule();
     }

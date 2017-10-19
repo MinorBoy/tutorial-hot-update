@@ -27,7 +27,11 @@ class LoginState extends GameBaseState {
     registerModules() {
         super.registerModules();
 
-        let ary = [GameModule.LoginModule, GameModule.LoaderModule]
+        let ary = [ 
+                    GameModule.CreateRoleModule,//临时测试使用
+                    GameModule.LoginModule, 
+                    GameModule.LoaderModule
+                  ]
         for (let moduleName of ary) {
             let module = GameModuleMap.getModule(moduleName);
             this.registerModuleClass(moduleName, module);
@@ -59,14 +63,14 @@ class LoginState extends GameBaseState {
     //加载配置表
     onLoadConfigFile() {
         logger.info("=============>预加载配置表")
-        ++this._totalDownLoadCount;        
+        this._totalDownLoadCount += ConfigDataManager.getTotalCount() ;
         ConfigDataManager.init((this.updateLoadingModuleProgress).bind(this));
     }
 
     //加载协议
     onLoadProtobufFile() {
         logger.info("=============>预加载协议")
-        ++this._totalDownLoadCount;
+        this._totalDownLoadCount += ProtoManager.getTotalCount();
         ProtoManager.init((this.updateLoadingModuleProgress).bind(this));
     }
 
@@ -80,7 +84,7 @@ class LoginState extends GameBaseState {
     updateLoadingModuleProgress() {
         ++this._curDownLoadCount;
 
-        let progress = this._curDownLoadCount / this._totalDownLoadCount * 100;
+        let progress = Math.ceil(this._curDownLoadCount / this._totalDownLoadCount * 100);
 
         this.sendNotification(AppEvent.LOADER_UPDATE_PROGRESS, { loadProgress: progress });
 

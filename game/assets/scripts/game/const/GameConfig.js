@@ -21,12 +21,12 @@ GameConfig.channelId = 0; // --子渠道ID
 GameConfig.localVersion = 0; // --对应热更时的小版本号
 GameConfig.mainVersion = 0; //主版本
 GameConfig.clientVersion = "0.0"; //客户端版本 主+子
-GameConfig.isTest = 2; // --是否为测试包 1测试 2正式 3运营
+GameConfig.isTest = 1; // --是否为测试包 1测试 2正式 3运营
 
 /////////////////相关请求地址url//////////////////////////////
 GameConfig.local_admincenter_api_url = "http://192.168.10.138:8001/gcol/"; // --本地中央服接口
 GameConfig.admincenter_api_url = "http://center.znlgame.com:8888/gcol/"; //  --中央接口服
-GameConfig.server_list_url = GameConfig.local_admincenter_api_url;
+GameConfig.server_list_url = GameConfig.admincenter_api_url;
 
 ///////////////// 时间相关
 GameConfig.serverTime = new Date(); //服务器时间，一段时间后，通过心跳包 去同步时间

@@ -4,6 +4,8 @@
 import BasicProxy from "BasicProxy";
 import logger from "Logger";
 import AppEvent from "AppEvent";
+import GameProxy from "GameProxy";
+import GameConfig from "GameConfig";
 
 class #proxyName#Proxy extends BasicProxy {
     constructor() {

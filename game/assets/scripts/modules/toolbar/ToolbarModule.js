@@ -9,7 +9,7 @@ import ToolbarView from "ToolbarView";
 import ToolbarStore from "ToolbarStore";
 import ToolbarAction from "ToolbarAction";
 import ToolbarActionTypes from "ToolbarActionTypes";
-
+import AppEvent from "AppEvent"
 class ToolbarModule extends BasicModule{
     constructor(dispatcher){
         super(dispatcher);
@@ -36,7 +36,12 @@ class ToolbarModule extends BasicModule{
     }
 
     panelActionHandler(type, data) {
-
+        switch (type) 
+        {
+            case ToolbarActionTypes.SHOW_OTHER_EVENT:
+            this.sendNotification(AppEvent.MODULE_OPEN_EVENT, {moduleName: data.moduleName});
+            break;
+        }
     }
 
     gameActionHandler(event, data){

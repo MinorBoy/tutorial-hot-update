@@ -24,18 +24,27 @@ class ProtoManager {
             ++totolLoadCount
             this._loadPackage(ProtoName[k], ((root) => {
                 ++curLoadCount
-                if (totolLoadCount == curLoadCount && callback) {
+                // if (totolLoadCount == curLoadCount && callback) {
                     callback()
-                }
+                // }
             }).bind(this));
         }
+    }
+
+    getTotalCount(){
+        let i = 0;
+        for (let k in ProtoName) {
+            i++;
+        }
+        return i;
     }
 
     //加载单独一个包
     // callback(root) -- root是协议包
     _loadPackage(packageName, callback) {
-        let realUrl = cc.url.raw("resources/proto/" + packageName + ".proto");
-        protobuf.load(realUrl, (err, root) => {
+
+        let url = "proto/" + packageName + "";
+        protobuf.load(url, (err, root) => {
             if (err) {
                 logger.info("ProtoManager->_loadPackage package:%s, err:%s", packageName, err)
             } else {
@@ -51,10 +60,7 @@ class ProtoManager {
     }
 
     getProtoType(packageName, typeName, callback) {
-        logger.info("getProtoType = > typeName :", typeName)
-        if ( typeName == "M140012.S2C"){
-            let x = 1
-        }
+        //logger.info("getProtoType = > typeName :", typeName)
         this._loadPackageType(packageName, (packageType) => {
             let type = packageType.lookupType(packageName + "." + typeName); //TODO 这里可以将类型缓存起来，优化
             callback.call(this, type);

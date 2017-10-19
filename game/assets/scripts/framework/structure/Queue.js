@@ -64,7 +64,7 @@ class Queue{
         }
     
         let data                    = this._queue[this._first]
-        this._queue[this._first]    = null
+        delete this._queue[this._first]
         this._first                 = this._first + 1
         return data
     }

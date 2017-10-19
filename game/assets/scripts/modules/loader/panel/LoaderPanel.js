@@ -7,10 +7,11 @@ import logger from "Logger";
 class LoaderPanel extends BasicPanel{
     initPanel(){
 
-        this._presentTxt  = this.getChildByName("presentTxt");
-        this._versionTxt  = this.getChildByName("versionTxt");
-        this._percentTxt  = this.getChildByName("percentTxt");
-
+        this._presentTxt  = this.getChildByName("panelBottom/presentTxt");
+        this._versionTxt  = this.getChildByName("panelBottom/versionTxt");
+        this._percentTxt  = this.getChildByName("panelBottom/percentTxt");
+        this._loadBar = this.getChildByName("panelBottom/loadBar");
+        this._loadComponent = this._loadBar.getComponent(cc.ProgressBar);
        
     }
 
@@ -28,13 +29,13 @@ class LoaderPanel extends BasicPanel{
     //渲染相关
     render(){
         let curProgress = this.state.get("curProgress");//获取state
-
         this._renderProgress(curProgress);
     }
 
     //渲染进度条，动作gctodo
     _renderProgress(curProgress){
-        this.setLabel(this._percentTxt, curProgress + "%")
+        this.setLabel(this._percentTxt, curProgress + "%");
+        this._loadComponent.progress = curProgress / 100;
     }
 
 
